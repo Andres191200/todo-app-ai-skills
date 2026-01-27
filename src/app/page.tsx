@@ -1,66 +1,67 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+
+import { useState, useMemo, useCallback } from 'react'
+import { useTodos } from '@/hooks/useTodos'
+import { TodoForm } from '@/components/TodoForm/TodoForm'
+import { SearchBar } from '@/components/SearchBar/SearchBar'
+import { FilterTabs } from '@/components/FilterTabs/FilterTabs'
+import { TodoList } from '@/components/TodoList/TodoList'
+import type { FilterStatus } from '@/types/todo'
+import styles from './page.module.scss'
 
 export default function Home() {
+  const [filter, setFilter] = useState<FilterStatus>('all')
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const { data: todos = [], isLoading } = useTodos()
+
+  const handleFilterChange = useCallback((newFilter: FilterStatus) => {
+    setFilter(newFilter)
+  }, [])
+
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query)
+  }, [])
+
+  const counts = useMemo(() => {
+    const active = todos.filter((t) => !t.completed).length
+    const completed = todos.filter((t) => t.completed).length
+    return {
+      all: todos.length,
+      active,
+      completed,
+    }
+  }, [todos])
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className={styles.main}>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Todos</h1>
+          <p className={styles.subtitle}>Stay organized, one task at a time</p>
+        </header>
+
+        <TodoForm />
+
+        <div className={styles.controls}>
+          <SearchBar value={searchQuery} onChange={handleSearchChange} />
+          <FilterTabs
+            filter={filter}
+            onFilterChange={handleFilterChange}
+            counts={counts}
+          />
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div aria-live="polite" aria-atomic="true" className={styles.srOnly}>
+          {isLoading ? 'Loading todos…' : `${counts.all} todos total`}
         </div>
-      </main>
-    </div>
-  );
+
+        {isLoading ? (
+          <div className={styles.loading}>Loading…</div>
+        ) : (
+          <TodoList todos={todos} filter={filter} searchQuery={searchQuery} />
+        )}
+      </div>
+    </main>
+  )
 }
