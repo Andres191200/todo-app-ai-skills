@@ -5,6 +5,10 @@
   list-style: none;
   padding: 0;
   margin: 0;
+
+  li{
+     background: var(--color-bg-elevated) !important;
+  }
 }
 
 .empty {
@@ -15,7 +19,7 @@
   text-align: center;
   color: #6b7280;
   font-size: 0.9375rem;
-  background: #fafafa;
+  background: var(--color-bg-elevated);
   border: 1px dashed #e5e7eb;
   border-radius: 0.75rem;
 }
