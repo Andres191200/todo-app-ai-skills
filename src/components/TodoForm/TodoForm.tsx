@@ -26,7 +26,7 @@ export function TodoForm() {
   )
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={`${styles.form} container`} onSubmit={handleSubmit}>
       <div className={styles.fields}>
         <div className={styles.field}>
           <label htmlFor="todo-title" className={styles.label}>
