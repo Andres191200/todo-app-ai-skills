@@ -66,7 +66,7 @@ export default function Home() {
         ) : (
           <>
             <TodoList todos={todos} filter={filter} searchQuery={searchQuery} />
-            <TimelineChart todos={todos} />
+            <TimelineChart />
           </>
         )}
       </div>

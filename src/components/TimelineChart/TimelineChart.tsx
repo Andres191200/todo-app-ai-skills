@@ -11,12 +11,8 @@ import {
   CartesianGrid,
 } from 'recharts'
 import { useTheme } from '@/components/ThemeProvider'
-import type { Todo } from '@/types/todo'
+import { useActivity } from '@/hooks/useTodos'
 import styles from './TimelineChart.module.scss'
-
-interface TimelineChartProps {
-  todos: Todo[]
-}
 
 interface DayData {
   date: string
@@ -56,8 +52,9 @@ function formatDayLabel(date: Date): string {
   return date.toLocaleDateString('en-US', { weekday: 'short' })
 }
 
-export function TimelineChart({ todos }: TimelineChartProps) {
+export function TimelineChart() {
   const { theme, mounted } = useTheme()
+  const { data: activity = [] } = useActivity()
 
   const chartData = useMemo(() => {
     const last7Days = getLast7Days()
@@ -67,10 +64,10 @@ export function TimelineChart({ todos }: TimelineChartProps) {
       countsByDate.set(formatDateKey(day), 0)
     }
 
-    for (const todo of todos) {
-      const createdDate = new Date(todo.createdAt)
-      createdDate.setHours(0, 0, 0, 0)
-      const dateKey = formatDateKey(createdDate)
+    for (const event of activity) {
+      const eventDate = new Date(event.timestamp)
+      eventDate.setHours(0, 0, 0, 0)
+      const dateKey = formatDateKey(eventDate)
 
       if (countsByDate.has(dateKey)) {
         countsByDate.set(dateKey, (countsByDate.get(dateKey) ?? 0) + 1)
@@ -84,7 +81,7 @@ export function TimelineChart({ todos }: TimelineChartProps) {
     }))
 
     return data
-  }, [todos])
+  }, [activity])
 
   const totalThisWeek = useMemo(() => {
     return chartData.reduce((sum, day) => sum + day.count, 0)
