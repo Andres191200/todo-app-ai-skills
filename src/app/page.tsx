@@ -6,6 +6,7 @@ import { TodoForm } from '@/components/TodoForm/TodoForm'
 import { SearchBar } from '@/components/SearchBar/SearchBar'
 import { FilterTabs } from '@/components/FilterTabs/FilterTabs'
 import { TodoList } from '@/components/TodoList/TodoList'
+import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle'
 import type { FilterStatus } from '@/types/todo'
 import styles from './page.module.scss'
 
@@ -37,8 +38,11 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.container}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Todos</h1>
-          <p className={styles.subtitle}>Stay organized, one task at a time</p>
+          <div className={styles.headerContent}>
+            <h1 className={styles.title}>Todos</h1>
+            <p className={styles.subtitle}>Stay organized, one task at a time</p>
+          </div>
+          <ThemeToggle />
         </header>
 
         <TodoForm />
