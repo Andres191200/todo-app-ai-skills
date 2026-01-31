@@ -13,9 +13,9 @@
   justify-content: center;
   padding: 3rem 1.5rem;
   text-align: center;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   font-size: 0.9375rem;
-  background: #fafafa;
-  border: 1px dashed #e5e7eb;
+  background: var(--color-bg-input);
+  border: 1px dashed var(--color-border);
   border-radius: 0.75rem;
 }
