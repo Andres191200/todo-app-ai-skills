@@ -17,7 +17,7 @@
   }
 
   &.completed {
-    background: #fafafa;
+    background: var(--color-todo-completed);
 
     .title {
       color: #9ca3af;

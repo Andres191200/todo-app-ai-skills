@@ -1,10 +1,19 @@
 'use client'
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { loadTodos, saveTodos, generateId } from '@/lib/storage'
+import { loadTodos, saveTodos, generateId, loadActivity, logTodoCreated } from '@/lib/storage'
 import type { Todo } from '@/types/todo'
 
 const TODOS_KEY = ['todos']
+const ACTIVITY_KEY = ['activity']
+
+export function useActivity() {
+  return useQuery({
+    queryKey: ACTIVITY_KEY,
+    queryFn: loadActivity,
+    staleTime: Infinity,
+  })
+}
 
 export function useTodos() {
   return useQuery({
@@ -29,10 +38,12 @@ export function useAddTodo() {
       }
       const updated = [...todos, newTodo]
       saveTodos(updated)
+      logTodoCreated()
       return Promise.resolve(newTodo)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: TODOS_KEY })
+      queryClient.invalidateQueries({ queryKey: ACTIVITY_KEY })
     },
   })
 }
