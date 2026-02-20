@@ -8,6 +8,7 @@ import { FilterTabs } from '@/components/FilterTabs/FilterTabs'
 import { TodoList } from '@/components/TodoList/TodoList'
 import { TimelineChart } from '@/components/TimelineChart/TimelineChart'
 import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle'
+import { LanguageSelector } from '@/components/LanguageSelector/LanguageSelector'
 import type { FilterStatus } from '@/types/todo'
 import styles from './page.module.scss'
 
@@ -43,7 +44,10 @@ export default function Home() {
             <h1 className={styles.title}>Todos</h1>
             <p className={styles.subtitle}>Stay organized, one task at a time</p>
           </div>
-          <ThemeToggle />
+          <div className={styles.headerControls}>
+            <LanguageSelector />
+            <ThemeToggle />
+          </div>
         </header>
 
         <TodoForm />
