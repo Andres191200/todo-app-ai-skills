@@ -1,26 +1,25 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { useLanguage, type Language } from '@/components/LanguageProvider'
 import styles from './LanguageSelector.module.scss'
-
-type Language = 'en' | 'es'
 
 interface LanguageOption {
   code: Language
-  label: string
+  labelKey: 'english' | 'spanish'
 }
 
 const languages: LanguageOption[] = [
-  { code: 'en', label: 'English' },
-  { code: 'es', label: 'Spanish' },
+  { code: 'en', labelKey: 'english' },
+  { code: 'es', labelKey: 'spanish' },
 ]
 
 export function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>('en')
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const { language, setLanguage, t, mounted } = useLanguage()
 
-  const selectedOption = languages.find((lang) => lang.code === selectedLanguage)
+  const selectedOption = languages.find((lang) => lang.code === language)
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -34,9 +33,18 @@ export function LanguageSelector() {
   }, [])
 
   const handleSelect = (code: Language) => {
-    setSelectedLanguage(code)
+    setLanguage(code)
     setIsOpen(false)
-    // TODO: Implement language change logic here
+  }
+
+  if (!mounted) {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.trigger} style={{ visibility: 'hidden' }}>
+          <span className={styles.label}>English</span>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -47,7 +55,7 @@ export function LanguageSelector() {
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-label="Select language"
+        aria-label={t('selectLanguage')}
       >
         <svg
           width="18"
@@ -64,7 +72,7 @@ export function LanguageSelector() {
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
           <path d="M2 12h20" />
         </svg>
-        <span className={styles.label}>{selectedOption?.label}</span>
+        <span className={styles.label}>{selectedOption ? t(selectedOption.labelKey) : ''}</span>
         <svg
           className={`${styles.chevron} ${isOpen ? styles.open : ''}`}
           width="14"
@@ -82,17 +90,17 @@ export function LanguageSelector() {
       </button>
 
       {isOpen && (
-        <ul className={styles.dropdown} role="listbox" aria-label="Language options">
+        <ul className={styles.dropdown} role="listbox" aria-label={t('selectLanguage')}>
           {languages.map((lang) => (
             <li key={lang.code}>
               <button
                 type="button"
-                className={`${styles.option} ${lang.code === selectedLanguage ? styles.selected : ''}`}
+                className={`${styles.option} ${lang.code === language ? styles.selected : ''}`}
                 onClick={() => handleSelect(lang.code)}
                 role="option"
-                aria-selected={lang.code === selectedLanguage}
+                aria-selected={lang.code === language}
               >
-                {lang.label}
+                {t(lang.labelKey)}
               </button>
             </li>
           ))}
