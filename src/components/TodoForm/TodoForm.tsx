@@ -1,42 +1,44 @@
-'use client'
+"use client";
 
-import { useState, useCallback, type FormEvent } from 'react'
-import { useAddTodo } from '@/hooks/useTodos'
-import styles from './TodoForm.module.scss'
+import { useState, useCallback, type FormEvent } from "react";
+import { useAddTodo } from "@/hooks/useTodos";
+import styles from "./TodoForm.module.scss";
+import { useLanguage } from "../LanguageProvider";
 
 export function TodoForm() {
-  const [title, setTitle] = useState('')
-  const [dueDate, setDueDate] = useState('')
-  const addTodo = useAddTodo()
+  const { t } = useLanguage();
+  const [title, setTitle] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const addTodo = useAddTodo();
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      const trimmedTitle = title.trim()
-      if (!trimmedTitle) return
+      e.preventDefault();
+      const trimmedTitle = title.trim();
+      if (!trimmedTitle) return;
 
       addTodo.mutate({
         title: trimmedTitle,
         dueDate: dueDate || null,
-      })
-      setTitle('')
-      setDueDate('')
+      });
+      setTitle("");
+      setDueDate("");
     },
-    [title, dueDate, addTodo]
-  )
+    [title, dueDate, addTodo],
+  );
 
   return (
     <form className={`${styles.form} container`} onSubmit={handleSubmit}>
       <div className={styles.fields}>
         <div className={styles.field}>
           <label htmlFor="todo-title" className={styles.label}>
-            Task title
+            {t("taskTitle")}
           </label>
           <input
             id="todo-title"
             type="text"
             className={styles.input}
-            placeholder="What needs to be done…"
+            placeholder={t("taskPlaceholder")}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             autoComplete="off"
@@ -45,7 +47,7 @@ export function TodoForm() {
         </div>
         <div className={styles.field}>
           <label htmlFor="todo-due-date" className={styles.label}>
-            Due date
+            {t("dueDate")}
           </label>
           <input
             id="todo-due-date"
@@ -61,8 +63,8 @@ export function TodoForm() {
         className={styles.button}
         disabled={addTodo.isPending || !title.trim()}
       >
-        {addTodo.isPending ? 'Adding…' : 'Add Todo'}
+        {addTodo.isPending ? t('adding') : t('addTodo')}
       </button>
     </form>
-  )
+  );
 }

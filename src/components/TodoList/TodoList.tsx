@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { TodoItem } from '@/components/TodoItem/TodoItem'
 import type { Todo, FilterStatus } from '@/types/todo'
 import styles from './TodoList.module.scss'
+import { useLanguage } from '../LanguageProvider'
 
 interface TodoListProps {
   todos: Todo[]
@@ -12,6 +13,8 @@ interface TodoListProps {
 }
 
 export function TodoList({ todos, filter, searchQuery }: TodoListProps) {
+const {t} = useLanguage();
+
   const filteredTodos = useMemo(() => {
     let result = todos
 
@@ -42,13 +45,13 @@ export function TodoList({ todos, filter, searchQuery }: TodoListProps) {
     return (
       <div className={styles.empty}>
         {searchQuery.trim() ? (
-          <p>No todos match your search</p>
+          <p>{t('noTodosMatch')}</p>
         ) : filter === 'active' ? (
-          <p>No active todos</p>
+          <p>{t('noActiveTodos')}</p>
         ) : filter === 'completed' ? (
-          <p>No completed todos</p>
+          <p>{t('noCompletedTodos')}</p>
         ) : (
-          <p>No todos yet. Add one above!</p>
+          <p>{t('noTodosYet')}</p>
         )}
       </div>
     )

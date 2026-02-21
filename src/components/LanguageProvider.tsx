@@ -8,11 +8,14 @@ import {
   useCallback,
   useSyncExternalStore,
   type ReactNode,
+  useMemo,
 } from 'react'
 import en from '@/locales/en.json'
 import es from '@/locales/es.json'
 
-export type Language = 'en' | 'es'
+const LANGUAGES = ['en', 'es'] as const;
+
+export type Language = (typeof LANGUAGES)[number];
 
 type TranslationKeys = keyof typeof en
 
@@ -32,10 +35,15 @@ const translations: Record<Language, typeof en> = {
   es,
 }
 
+function isLanguage(value: unknown): value is Language {
+  return typeof value === 'string' && LANGUAGES.includes(value as Language)
+}
+
 function getInitialLanguage(): Language {
   if (typeof window === 'undefined') return 'en'
   const stored = localStorage.getItem(LANGUAGE_KEY) as Language | null
-  if (stored && (stored === 'en' || stored === 'es')) return stored
+  
+  if (isLanguage(stored)) return stored
   // Optionally detect browser language
   const browserLang = navigator.language.split('-')[0]
   if (browserLang === 'es') return 'es'
@@ -85,8 +93,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     [language]
   )
 
+  const value = useMemo(
+  () => ({ language, setLanguage, t, mounted }),
+  [language, setLanguage, t, mounted]
+)
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, mounted }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   )

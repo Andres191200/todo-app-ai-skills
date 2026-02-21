@@ -13,6 +13,7 @@ import {
 import { useTheme } from '@/components/ThemeProvider'
 import { useActivity } from '@/hooks/useTodos'
 import styles from './TimelineChart.module.scss'
+import { useLanguage } from '../LanguageProvider'
 
 interface DayData {
   date: string
@@ -53,6 +54,7 @@ function formatDayLabel(date: Date): string {
 }
 
 export function TimelineChart() {
+  const {t} = useLanguage();
   const { theme, mounted } = useTheme()
   const { data: activity = [] } = useActivity()
 
@@ -106,7 +108,7 @@ export function TimelineChart() {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <h2 className={styles.title}>Activity This Week</h2>
+          <h2 className={styles.title}>{t('activityThisWeek')}</h2>
         </div>
         <div className={styles.chartWrapper} style={{ height: 200 }} />
       </div>
@@ -116,8 +118,8 @@ export function TimelineChart() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Activity This Week</h2>
-        <span className={styles.total}>{totalThisWeek} todos created</span>
+        <h2 className={styles.title}>{t('activityThisWeek')}</h2>
+        <span className={styles.total}>{totalThisWeek} {t('todosCreated')}</span>
       </div>
 
       <div className={styles.chartWrapper}>

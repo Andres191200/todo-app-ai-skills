@@ -16,7 +16,7 @@ import { useLanguage } from '../components/LanguageProvider'
 export default function Home() {
   const [filter, setFilter] = useState<FilterStatus>('all')
   const [searchQuery, setSearchQuery] = useState('')
-  const {t, language} = useLanguage();
+  const {t} = useLanguage();
 
   const { data: todos = [], isLoading } = useTodos()
 
@@ -64,7 +64,7 @@ export default function Home() {
         </div>
 
         <div aria-live="polite" aria-atomic="true" className={styles.srOnly}>
-          {isLoading ? 'Loading todos…' : `${counts.all} todos total`}
+          {isLoading ? t('loadingTodos') : `${counts.all} todos total`}
         </div>
 
         {isLoading ? (
