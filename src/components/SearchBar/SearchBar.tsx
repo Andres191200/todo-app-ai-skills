@@ -1,17 +1,20 @@
-'use client'
+"use client";
 
-import styles from './SearchBar.module.scss'
+import { useLanguage } from "../LanguageProvider";
+import styles from "./SearchBar.module.scss";
 
 interface SearchBarProps {
-  value: string
-  onChange: (value: string) => void
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export function SearchBar({ value, onChange }: SearchBarProps) {
+  const { t } = useLanguage();
+
   return (
     <div className={styles.container}>
       <label htmlFor="todo-search" className={styles.label}>
-        Search todos
+        {t("searchTodos")}
       </label>
       <div className={styles.inputWrapper}>
         <svg
@@ -34,7 +37,7 @@ export function SearchBar({ value, onChange }: SearchBarProps) {
           id="todo-search"
           type="search"
           className={styles.input}
-          placeholder="Search todos…"
+          placeholder={t("searchTodos")}  
           value={value}
           onChange={(e) => onChange(e.target.value)}
           autoComplete="off"
@@ -42,5 +45,5 @@ export function SearchBar({ value, onChange }: SearchBarProps) {
         />
       </div>
     </div>
-  )
+  );
 }

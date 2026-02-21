@@ -8,12 +8,15 @@ import { FilterTabs } from '@/components/FilterTabs/FilterTabs'
 import { TodoList } from '@/components/TodoList/TodoList'
 import { TimelineChart } from '@/components/TimelineChart/TimelineChart'
 import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle'
+import { LanguageSelector } from '@/components/LanguageSelector/LanguageSelector'
 import type { FilterStatus } from '@/types/todo'
 import styles from './page.module.scss'
+import { useLanguage } from '../components/LanguageProvider'
 
 export default function Home() {
   const [filter, setFilter] = useState<FilterStatus>('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const {t} = useLanguage();
 
   const { data: todos = [], isLoading } = useTodos()
 
@@ -41,9 +44,12 @@ export default function Home() {
         <header className={styles.header}>
           <div className={styles.headerContent}>
             <h1 className={styles.title}>Todos</h1>
-            <p className={styles.subtitle}>Stay organized, one task at a time</p>
+            <p className={styles.subtitle}>{t('appSubtitle')}</p>
           </div>
-          <ThemeToggle />
+          <div className={styles.headerControls}>
+            <LanguageSelector />
+            <ThemeToggle />
+          </div>
         </header>
 
         <TodoForm />
@@ -58,7 +64,7 @@ export default function Home() {
         </div>
 
         <div aria-live="polite" aria-atomic="true" className={styles.srOnly}>
-          {isLoading ? 'Loading todos…' : `${counts.all} todos total`}
+          {isLoading ? t('loadingTodos') : `${counts.all} todos total`}
         </div>
 
         {isLoading ? (
