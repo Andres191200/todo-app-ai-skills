@@ -23,37 +23,31 @@
 .icon {
   position: absolute;
   left: 0.875rem;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   pointer-events: none;
 }
 
 .input {
   width: 100%;
   padding: 0.75rem 0.875rem 0.75rem 2.75rem;
-  font-size: 0.875rem;
-  outline: none;
+  font-size: var(--text-base);
   border: none;
-  border-radius: 0.5rem;
-  background-color: var(--color-bg-input) !important;
-  color: #fff;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-input);
+  color: var(--color-text);
+  transition: box-shadow 0.15s;
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
 
   &::placeholder {
-    color: #9ca3af;
-  }
-
-  &:hover {
-    border-color: #d1d5db;
+    color: var(--color-text-muted);
   }
 
   &:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: var(--shadow-focus);
   }
 
   &::-webkit-search-cancel-button {
