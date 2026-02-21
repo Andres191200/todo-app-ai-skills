@@ -1,16 +1,15 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1.25rem;
-
+  gap: var(--space-md);
+  padding: var(--space-lg);
   background-color: var(--color-bg-elevated);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-lg);
 }
 
 .fields {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-md);
   flex-wrap: wrap;
 
   @media (max-width: 600px) {
@@ -21,7 +20,7 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
+  gap: var(--space-sm);
   flex: 1;
   min-width: 0;
 
@@ -31,7 +30,7 @@
 }
 
 .label {
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--color-text);
   text-transform: uppercase;
@@ -41,46 +40,41 @@
 .input,
 .dateInput {
   padding: 0.625rem 0.875rem;
-
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
   border: none;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-md);
   background: var(--color-bg-input);
-  color: var(--text-color);
-  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+  color: var(--color-text);
+  transition: box-shadow 0.15s, background-color 0.15s;
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
 
   &::placeholder {
-    color: #9ca3af;
+    color: var(--color-text-muted);
   }
-
 
   &:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: var(--shadow-focus);
   }
 }
 
 .dateInput {
   cursor: pointer;
   min-width: 140px;
-  background-color: (--color-bg-input);
-  box-shadow: 0 3px 3px 3px var(--color-bg-input-shadow);
 }
 
 .button {
   align-self: flex-start;
   padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
+  font-size: var(--text-base);
   font-weight: 500;
   color: #fff;
   background: var(--color-primary);
   border: none;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: background-color 0.15s, transform 0.1s;
 
@@ -89,7 +83,7 @@
   }
 
   &:hover:not(:disabled) {
-    background: #333;
+    filter: brightness(0.9);
   }
 
   &:active:not(:disabled) {
@@ -97,7 +91,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid #3b82f6;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 

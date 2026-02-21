@@ -1,28 +1,28 @@
 .container {
-  padding: 1.25rem;
+  padding: var(--space-lg);
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-lg);
 }
 
 .header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 1rem;
-  gap: 1rem;
+  margin-bottom: var(--space-md);
+  gap: var(--space-md);
   flex-wrap: wrap;
 }
 
 .title {
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
   color: var(--color-text);
   margin: 0;
 }
 
 .total {
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   color: var(--color-text-secondary);
   font-variant-numeric: tabular-nums;
 }
@@ -30,7 +30,6 @@
 .chartWrapper {
   width: 100%;
 
-  // Ensure recharts renders properly
   :global(.recharts-wrapper) {
     font-family: inherit;
   }

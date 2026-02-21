@@ -1,7 +1,7 @@
 .main {
   display: flex;
   justify-content: center;
-  padding: 2rem 1rem;
+  padding: 2rem var(--space-md);
   min-height: 100vh;
 }
 
@@ -10,14 +10,14 @@
   max-width: 640px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-lg);
 }
 
 .header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-md);
 }
 
 .headerContent {
@@ -27,11 +27,11 @@
 .headerControls {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-sm);
 }
 
 .title {
-  font-size: 2rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--color-text);
   letter-spacing: -0.02em;
@@ -40,23 +40,23 @@
 }
 
 .subtitle {
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
   color: var(--color-text-secondary);
 }
 
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-md);
 }
 
 .loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
+  padding: var(--space-lg);
   color: var(--color-text-secondary);
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
 }
 
 .srOnly {
